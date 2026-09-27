@@ -20,8 +20,36 @@ public class MyServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) {
-                            // 往流水线上添加我们自己的业务处理器
-                            ch.pipeline().addLast(new ServerBusinessHandler());
+                            // 第一道工序：解码 Handler
+                            ch.pipeline().addLast("decoderHandler", new ChannelInboundHandlerAdapter() {
+                                @Override
+                                public void channelRead(ChannelHandlerContext ctx, Object msg) {
+                                    ByteBuf buf = (ByteBuf) msg;
+                                    System.out.println("【工序 1 准备解码】: " + buf);
+                                    String str = buf.toString(StandardCharsets.UTF_8);
+                                    System.out.println("【工序 1 解码完成】: " + str);
+
+                                    // 重点：调用 fireChannelRead，把转换好的 String 传递给下一个 Handler！
+                                    ctx.fireChannelRead(str);
+
+                                    buf.release(); // 第一道工序用完了 ByteBuf，释放它
+                                }
+                            });
+
+                            // 第二道工序：业务 Handler（直接接盘第一道工序的成果）
+                            ch.pipeline().addLast("businessHandler", new ChannelInboundHandlerAdapter() {
+                                @Override
+                                public void channelRead(ChannelHandlerContext ctx, Object msg) {
+                                    // 注意：这里的 msg 已经是 String 了，不再是 ByteBuf！
+                                    String str = (String) msg;
+                                    System.out.println("【工序 2 拿到字符串做业务】: " + str);
+
+                                    // 业务回复
+                                    ByteBuf resp = ctx.alloc().buffer();
+                                    resp.writeBytes(("处理完成: " + str.toUpperCase()).getBytes(StandardCharsets.UTF_8));
+                                    ctx.writeAndFlush(resp);
+                                }
+                            });
                         }
                     });
 
