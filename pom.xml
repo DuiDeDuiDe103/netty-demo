@@ -14,4 +14,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!-- 推荐用稍微新一点的 4.1.x 版本（比如 4.1.94.Final 或更高），对高版本 JDK 支持更完美 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.100.Final</version>
+        </dependency>
+    </dependencies>
+
 </project>
