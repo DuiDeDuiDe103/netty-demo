@@ -13,7 +13,7 @@ public class RpcClient {
     @SuppressWarnings("unchecked")
     public static <T> T getProxyService(Class<T> ServiceClass) {
         ClassLoader classLoader = ServiceClass.getClassLoader();
-        Class<?>[] interfaces = ServiceClass.getInterfaces();
+        Class<?>[] interfaces = new Class[]{ServiceClass};
 
         return (T) Proxy.newProxyInstance(classLoader,interfaces,((proxy, method, args) -> {
             int seqId = ID_GENERATOR.getAndIncrement();

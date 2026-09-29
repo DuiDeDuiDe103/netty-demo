@@ -23,7 +23,7 @@ public class RpcServiceHandle extends SimpleChannelInboundHandler<RpcRequestMess
             response = new RpcResponseMessage(msg.getSequenceid(),result,null);
         } catch (Exception e) {
             e.printStackTrace();
-            response = new RpcResponseMessage(msg.getSequenceid(),null,e);
+            response = new RpcResponseMessage(msg.getSequenceid(),null,new String(e.getMessage()));
         }
         ctx.writeAndFlush(response);
     }
