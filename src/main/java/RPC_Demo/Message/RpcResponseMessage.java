@@ -1,6 +1,8 @@
-package RPC_Demo.Service;
+package RPC_Demo.Message;
 
-public class RpcResponseMessage {
+import java.io.Serializable;
+
+public class RpcResponseMessage implements Serializable {
     private int sequenceid;
     private Object result;
     private String error;

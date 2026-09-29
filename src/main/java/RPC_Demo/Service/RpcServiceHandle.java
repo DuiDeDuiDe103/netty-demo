@@ -1,6 +1,7 @@
 package RPC_Demo.Service;
 
-import RPC_Demo.Client.RpcRequestMessage;
+import RPC_Demo.Message.RpcRequestMessage;
+import RPC_Demo.Message.RpcResponseMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 

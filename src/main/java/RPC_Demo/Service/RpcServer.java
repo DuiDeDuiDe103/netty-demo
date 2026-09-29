@@ -29,7 +29,7 @@ public class RpcServer {
                         }
                     });
 
-            ChannelFuture channelFuture = bootstrap.bind(8888).sync();
+            ChannelFuture channelFuture = bootstrap.bind(8080).sync();
             System.out.println(">>> RPC 服务端已启动在 8080 端口，等待被远程调用...");
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {

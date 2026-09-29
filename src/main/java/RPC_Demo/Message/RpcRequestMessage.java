@@ -1,4 +1,4 @@
-package RPC_Demo.Client;
+package RPC_Demo.Message;
 
 
 import java.io.Serializable;
