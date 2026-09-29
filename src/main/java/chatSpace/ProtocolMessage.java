@@ -1,3 +1,5 @@
+package chatSpace;
+
 import java.io.Serializable;
 
 // 消息必须实现 Serializable 以便二进制序列化
